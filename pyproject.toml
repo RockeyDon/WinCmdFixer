@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "win-cmd-fixer"
+version = "0.1.0"
+description = "A lightweight tool that sanitizes AI-writted shell commands into Windows compatible ones"
+
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [ { name = "RockeyDon" }]
+
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pyright",
+    "ruff",
+    "flake8",
+    "Flake8-pyproject"
+]
+
+[project.urls]
+Homepage = "https://github.com/RockeyDon/win-cmd-fixer"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+packages = ["win_cmd_fixer"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--verbose",
+    "--strict-markers"
+]
+
+[tool.pyright]
+pythonVersion = "3.11"
+
+[tool.ruff]
+target-version = "py311"
+lint.select = [
+    "E",   # PEP 8
+    "F",   # Pyflakes
+    "B",   # Bugbear
+]
+lint.ignore = [
+    "E701",
+    "B008",
+    "E501",
+]
+
+[tool.flake8]
+ignore = [
+    "E501",  # by ruff
+    "E701",
+    "E126", "W503", "W504"
+]
