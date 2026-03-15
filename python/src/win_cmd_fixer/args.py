@@ -1,19 +1,25 @@
 import typing as tp
 
 
-def split_args(text: str) -> tp.List[str]:
-    """split by space, but keep ones in quotes"""
-    result = []
-    current = []
+def split_args(text: str, escape_char: str = '^') -> tp.List[str]:
+    """Split by space, but keep tokens inside quotes together.
+
+    Args:
+        text:        raw argument string.
+        escape_char: shell-specific escape character
+                     ('^' for CMD, '`' for PowerShell, '\\' for Unix).
+    """
+    result: tp.List[str] = []
+    current: tp.List[str] = []
     in_quotes = False
     escaped = False
-    quote_char = None
+    quote_char: tp.Optional[str] = None
 
     i = 0
     while i < len(text):
         char = text[i]
 
-        if char == '^' and not escaped:
+        if char == escape_char and not escaped:
             escaped = True
             i += 1
             continue
@@ -42,7 +48,8 @@ def split_args(text: str) -> tp.List[str]:
             continue
         current.append(char)
         i += 1
-    # last one
+
+    # last token
     if current:
         result.append(''.join(current))
     return result
